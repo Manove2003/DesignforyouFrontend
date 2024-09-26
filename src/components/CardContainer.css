@@ -1,0 +1,44 @@
+/* Header and Section Title */
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+
+.highlight-text {
+  color: #258aff;
+  font-weight: 600;
+}
+
+.section-title {
+  margin-left: 30px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Card Container */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card-container {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}

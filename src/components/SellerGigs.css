@@ -1,0 +1,351 @@
+.seller-gigs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-family: Arial, sans-serif;
+}
+.left-section {
+  flex: 1;
+  max-width: 300px;
+}
+
+.right-section {
+  flex: 2;
+}
+.profile-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.total-earning {
+  display: flex;
+  margin-top: 10px;
+  padding: 1rem;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.inbox {
+  margin-top: 20px;
+}
+
+.inbox-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Right Section Styling */
+.services-offered,
+.projects-queue {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  justify-content: center;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.service-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.service-image {
+  width: 130px;
+  height: 188px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+/* Service title with profile */
+.service-title-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.small-profile-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.projects-queue {
+  margin-top: 20px;
+}
+
+.project-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.project-image {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.status {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.pending {
+  color: orange;
+}
+
+.delivered {
+  color: green;
+}
+
+.completed {
+  color: blue;
+}
+
+.days-left {
+  color: red;
+  font-weight: bold;
+}
+.service-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  gap: 10px;
+  align-items: center;
+}
+
+.service-title-profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.small-profile-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .left-section {
+    max-width: 40%;
+  }
+
+  .right-section {
+    max-width: 60%;
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .service-title-profile {
+    display: flex;
+    flex-direction: row;
+  }
+  .service-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0rem 1rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .profile-card {
+    display: inline-grid;
+    margin: 0.5rem;
+    text-align: center;
+  }
+
+  .profile-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .inbox-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .inbox-item > * {
+    margin-bottom: 10px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr; /* Stack services in a single column */
+  }
+
+  .service-card {
+    flex-direction: column;
+  }
+
+  .service-image {
+    width: 100px;
+    height: 150px;
+  }
+
+  .service-title-profile {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .projects-queue {
+    margin-top: 10px;
+  }
+
+  .project-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .project-image {
+    width: 60px;
+    height: 100px;
+  }
+}
+
+/* Adjustments for smaller screens (max-width: 425px) */
+@media (max-width: 425px) {
+  .profile-card {
+    display: inline-grid;
+    margin: 0.5rem auto; /* Center the profile card with auto margins */
+    text-align: center;
+  }
+
+  .profile-image {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto; /* Ensure the profile image is centered */
+  }
+
+  .inbox-item {
+    flex-direction: column;
+    align-items: center; /* Align items to the center */
+    padding: 10px;
+  }
+
+  .inbox-item > * {
+    margin-bottom: 10px;
+    text-align: center; /* Center inbox item text */
+  }
+  .projects-queue {
+    margin-top: 10px;
+  }
+
+  .project-card {
+    flex-direction: column;
+    align-items: center; /* Center project card content */
+    text-align: center;
+  }
+
+  .project-image {
+    width: 60px;
+    height: 100px;
+    margin-bottom: 10px; /* Add spacing for images */
+  }
+}
+.inbox {
+  margin-top: 20px;
+}
+
+.inbox-item {
+  display: flex;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  align-items: center; /* Align items vertically */
+}
+
+.inbox-image-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.small-inbox-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.inbox-text-column {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 15px;
+}
+
+.inbox-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.inbox-message {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 425px) {
+  .inbox-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inbox-image-column {
+    justify-content: flex-start;
+  }
+
+  .inbox-text-column {
+    padding-left: 0;
+    text-align: left;
+  }
+
+  .inbox-item > * {
+    margin-bottom: 10px;
+  }
+}
