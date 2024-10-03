@@ -32,7 +32,7 @@ const LoginSystem = ({ toggleView }) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://designforyoubackend.onrender.com/api/auth/login",
         { email, password }
       );
       const { token, user } = response.data;
@@ -58,7 +58,8 @@ const LoginSystem = ({ toggleView }) => {
   // };
   const handleGoogleLogin = () => {
     // Start Google OAuth login by redirecting to the backend OAuth endpoint
-    window.location.href = "http://localhost:5000/api/auth/google";
+    window.location.href =
+      "https://designforyoubackend.onrender.com/api/auth/google";
   };
 
   // Handle redirection from Google OAuth
@@ -82,7 +83,7 @@ const LoginSystem = ({ toggleView }) => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        "http://localhost:5000/api/auth/update-role",
+        "https://designforyoubackend.onrender.com/api/auth/update-role",
         { role: "buyer" }, // Default role after login
         {
           headers: {
@@ -98,7 +99,8 @@ const LoginSystem = ({ toggleView }) => {
   };
 
   const handleFacebookLogin = () => {
-    window.location.href = "http://localhost:5000/api/auth/facebook";
+    window.location.href =
+      "https://designforyoubackend.onrender.com/api/auth/facebook";
   };
 
   return (
