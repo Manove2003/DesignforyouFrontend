@@ -58,9 +58,9 @@ const LoginSystem = ({ toggleView }) => {
   // };
   const handleGoogleLogin = () => {
     // Start Google OAuth login by redirecting to the backend OAuth endpoint
-    window.location.href =
-      "https://designforyoubackend.onrender.com/api/auth/google";
+    window.location.href = "https://designforyoubackend.onrender.com/google";
   };
+  // "https://designforyoubackend.onrender.com/api/auth/google";
 
   // Handle redirection from Google OAuth
   useEffect(() => {
@@ -83,7 +83,7 @@ const LoginSystem = ({ toggleView }) => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        "https://designforyoubackend.onrender.com/api/auth/update-role",
+        "https://designforyoubackend.onrender.com/update-role",
         { role: "buyer" }, // Default role after login
         {
           headers: {
@@ -99,8 +99,7 @@ const LoginSystem = ({ toggleView }) => {
   };
 
   const handleFacebookLogin = () => {
-    window.location.href =
-      "https://designforyoubackend.onrender.com/api/auth/facebook";
+    window.location.href = "https://designforyoubackend.onrender.com/facebook";
   };
 
   return (
