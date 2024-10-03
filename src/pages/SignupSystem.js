@@ -40,7 +40,7 @@ const SignupSystem = ({ toggleView }) => {
 
     try {
       const response = await axios.post(
-        "https://designforyoubackend.onrender.com/signup",
+        "https://designforyoubackend.onrender.com/api/auth/signup",
         {
           email,
           password,
@@ -67,11 +67,13 @@ const SignupSystem = ({ toggleView }) => {
   };
 
   const handleGoogleSignup = () => {
-    window.location.href = "https://designforyoubackend.onrender.com/google";
+    window.location.href =
+      "https://designforyoubackend.onrender.com/api/auth/google";
   };
 
   const handleFacebookSignup = () => {
-    window.location.href = "https://designforyoubackend.onrender.com/facebook";
+    window.location.href =
+      "https://designforyoubackend.onrender.com/api/auth/facebook";
   };
 
   const handleCloseSnackbar = () => {
