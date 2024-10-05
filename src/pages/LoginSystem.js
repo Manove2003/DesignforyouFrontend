@@ -63,6 +63,18 @@ const LoginSystem = ({ toggleView }) => {
   };
 
   // Handle redirection from Google OAuth
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const token = urlParams.get("token");
+  //   if (token) {
+  //     localStorage.setItem("token", token);
+  //     toast.success("Logged in with Google");
+  //     updateRoleOnLogin();
+  //     navigate("/welcome");
+  //   }
+  // }, [navigate]);
+
+  // Handle redirection from Google OAuth
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
@@ -74,7 +86,8 @@ const LoginSystem = ({ toggleView }) => {
       // Optionally, you can call an API to update the role here if needed
       updateRoleOnLogin();
 
-      navigate("/welcome"); // Redirect to the welcome page
+      // Clean up the URL before navigating (remove query parameters)
+      navigate("/welcome", { replace: true }); // Redirect to the welcome page without the query params
     }
   }, [navigate]);
 
