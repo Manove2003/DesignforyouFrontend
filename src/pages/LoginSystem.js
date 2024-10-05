@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Box,
   TextField,
@@ -59,21 +59,7 @@ const LoginSystem = ({ toggleView, onRoleChange }) => {
       "https://designforyoubackend-1.onrender.com/api/auth/google";
   };
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
-
-    if (token) {
-      localStorage.setItem("token", token);
-      toast.success("Logged in with Google");
-
-      updateRoleOnLogin();
-
-      navigate("/welcome", { replace: true });
-    }
-  }, [navigate]);
-
-  const updateRoleOnLogin = async () => {
+  const updateRoleOnLogin = useCallback(async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
@@ -91,7 +77,21 @@ const LoginSystem = ({ toggleView, onRoleChange }) => {
       console.error("Failed to set role:", error);
       toast.error("Failed to set role.");
     }
-  };
+  }, [onRoleChange]);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    if (token) {
+      localStorage.setItem("token", token);
+      toast.success("Logged in with Google");
+
+      updateRoleOnLogin();
+
+      navigate("/welcome", { replace: true });
+    }
+  }, [updateRoleOnLogin, navigate]);
 
   return (
     <Box
