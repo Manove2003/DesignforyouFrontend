@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   TextField,
@@ -11,17 +11,18 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CustomGoogleIcon from "./CustomGoogleIcon";
+import CustomFacebookIcon from "./CustomFacebookIcon";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-const LoginSystem = ({ toggleView, onRoleChange }) => {
+const LoginSystem = ({ toggleView }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleClickShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -39,9 +40,7 @@ const LoginSystem = ({ toggleView, onRoleChange }) => {
       localStorage.setItem("token", token);
       toast.success(`Logged in as ${user.email} (${user.username})`);
       setError("");
-
-      onRoleChange(user.role); // Update role based on user info
-      navigate("/welcome");
+      navigate("/welcome"); // Navigate to the welcome page on successful login
     } catch (error) {
       console.error(
         "Login failed:",
@@ -54,17 +53,38 @@ const LoginSystem = ({ toggleView, onRoleChange }) => {
     }
   };
 
+  // const handleGoogleLogin = () => {
+  //   window.location.href = "http://localhost:5000/api/auth/google";
+  // };
   const handleGoogleLogin = () => {
+    // Start Google OAuth login by redirecting to the backend OAuth endpoint
     window.location.href =
       "https://designforyoubackend-1.onrender.com/api/auth/google";
   };
 
-  const updateRoleOnLogin = useCallback(async () => {
+  // Handle redirection from Google OAuth
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    if (token) {
+      localStorage.setItem("token", token); // Store the token in localStorage
+      toast.success("Logged in with Google");
+
+      // Optionally, you can call an API to update the role here if needed
+      updateRoleOnLogin();
+
+      navigate("/welcome"); // Redirect to the welcome page
+    }
+  }, [navigate]);
+
+  // Function to update role on Google login
+  const updateRoleOnLogin = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
         "https://designforyoubackend-1.onrender.com/api/auth/update-role",
-        { role: "buyer" },
+        { role: "buyer" }, // Default role after login
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -72,26 +92,16 @@ const LoginSystem = ({ toggleView, onRoleChange }) => {
         }
       );
       toast.success(`Role set to ${response.data.user.role}`);
-      onRoleChange(response.data.user.role); // Update role based on Google login
     } catch (error) {
       console.error("Failed to set role:", error);
       toast.error("Failed to set role.");
     }
-  }, [onRoleChange]);
+  };
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
-
-    if (token) {
-      localStorage.setItem("token", token);
-      toast.success("Logged in with Google");
-
-      updateRoleOnLogin();
-
-      navigate("/welcome", { replace: true });
-    }
-  }, [updateRoleOnLogin, navigate]);
+  const handleFacebookLogin = () => {
+    window.location.href =
+      "https://designforyoubackend-1.onrender.com/api/auth/facebook";
+  };
 
   return (
     <Box
@@ -186,6 +196,14 @@ const LoginSystem = ({ toggleView, onRoleChange }) => {
         sx={{ mb: 2, width: "100%" }}
       >
         Login with Google
+      </Button>
+      <Button
+        variant="outlined"
+        startIcon={<CustomFacebookIcon />}
+        onClick={handleFacebookLogin}
+        sx={{ width: "100%" }}
+      >
+        Login with Facebook
       </Button>
     </Box>
   );
