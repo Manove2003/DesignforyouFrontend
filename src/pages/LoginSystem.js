@@ -11,18 +11,17 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CustomGoogleIcon from "./CustomGoogleIcon";
-import CustomFacebookIcon from "./CustomFacebookIcon";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
-const LoginSystem = ({ toggleView }) => {
+const LoginSystem = ({ toggleView, onRoleChange }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -40,7 +39,9 @@ const LoginSystem = ({ toggleView }) => {
       localStorage.setItem("token", token);
       toast.success(`Logged in as ${user.email} (${user.username})`);
       setError("");
-      navigate("/welcome"); // Navigate to the welcome page on successful login
+
+      onRoleChange(user.role); // Update role based on user info
+      navigate("/welcome");
     } catch (error) {
       console.error(
         "Login failed:",
@@ -53,51 +54,31 @@ const LoginSystem = ({ toggleView }) => {
     }
   };
 
-  // const handleGoogleLogin = () => {
-  //   window.location.href = "http://localhost:5000/api/auth/google";
-  // };
   const handleGoogleLogin = () => {
-    // Start Google OAuth login by redirecting to the backend OAuth endpoint
     window.location.href =
       "https://designforyoubackend-1.onrender.com/api/auth/google";
   };
 
-  // Handle redirection from Google OAuth
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.search);
-  //   const token = urlParams.get("token");
-  //   if (token) {
-  //     localStorage.setItem("token", token);
-  //     toast.success("Logged in with Google");
-  //     updateRoleOnLogin();
-  //     navigate("/welcome");
-  //   }
-  // }, [navigate]);
-
-  // Handle redirection from Google OAuth
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
 
     if (token) {
-      localStorage.setItem("token", token); // Store the token in localStorage
+      localStorage.setItem("token", token);
       toast.success("Logged in with Google");
 
-      // Optionally, you can call an API to update the role here if needed
       updateRoleOnLogin();
 
-      // Clean up the URL before navigating (remove query parameters)
-      navigate("/welcome", { replace: true }); // Redirect to the welcome page without the query params
+      navigate("/welcome", { replace: true });
     }
   }, [navigate]);
 
-  // Function to update role on Google login
   const updateRoleOnLogin = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
         "https://designforyoubackend-1.onrender.com/api/auth/update-role",
-        { role: "buyer" }, // Default role after login
+        { role: "buyer" },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -105,15 +86,11 @@ const LoginSystem = ({ toggleView }) => {
         }
       );
       toast.success(`Role set to ${response.data.user.role}`);
+      onRoleChange(response.data.user.role); // Update role based on Google login
     } catch (error) {
       console.error("Failed to set role:", error);
       toast.error("Failed to set role.");
     }
-  };
-
-  const handleFacebookLogin = () => {
-    window.location.href =
-      "https://designforyoubackend-1.onrender.com/api/auth/facebook";
   };
 
   return (
@@ -209,14 +186,6 @@ const LoginSystem = ({ toggleView }) => {
         sx={{ mb: 2, width: "100%" }}
       >
         Login with Google
-      </Button>
-      <Button
-        variant="outlined"
-        startIcon={<CustomFacebookIcon />}
-        onClick={handleFacebookLogin}
-        sx={{ width: "100%" }}
-      >
-        Login with Facebook
       </Button>
     </Box>
   );

@@ -19,8 +19,8 @@ const WelcomePage = ({ isSeller }) => {
               fontSize: "1.25rem",
             }}
           >
-            Let’s <span className="highlight-text">Explore the talent</span>
-            ,Start your Business From Today
+            Let’s <span className="highlight-text">Explore the talent</span>,
+            Start your Business From Today
           </h2>
         )}
       </Typography>
