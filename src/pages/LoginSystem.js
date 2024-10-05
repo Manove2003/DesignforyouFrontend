@@ -66,18 +66,15 @@ const LoginSystem = ({ toggleView }) => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
+    console.log("Captured token:", token); // Debugging log
 
     if (token) {
-      localStorage.setItem("token", token); // Store the token in localStorage
+      localStorage.setItem("token", token);
       toast.success("Logged in with Google");
-
-      // Optionally, you can call an API to update the role here if needed
-      updateRoleOnLogin();
-
+      updateRoleOnLogin(); // Set default role
       navigate("/welcome"); // Redirect to the welcome page
     }
   }, [navigate]);
-
   // Function to update role on Google login
   const updateRoleOnLogin = async () => {
     try {
