@@ -22,6 +22,7 @@ const LoginSystem = ({ toggleView }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleClickShowPassword = () => {
@@ -30,6 +31,7 @@ const LoginSystem = ({ toggleView }) => {
 
   const handleEmailLogin = async (event) => {
     event.preventDefault();
+    setLoading(true); // Start loading
     try {
       const response = await axios.post(
         "https://designforyoubackend-1.onrender.com/api/auth/login",
@@ -40,6 +42,7 @@ const LoginSystem = ({ toggleView }) => {
       localStorage.setItem("token", token);
       toast.success(`Logged in as ${user.email} (${user.username})`);
       setError("");
+      setLoading(false); // Stop loading
       navigate("/welcome"); // Navigate to the welcome page on successful login
     } catch (error) {
       console.error(
@@ -50,14 +53,11 @@ const LoginSystem = ({ toggleView }) => {
         error.response?.data?.message ||
           "Login failed. Please check your credentials."
       );
+      setLoading(false); // Stop loading
     }
   };
 
-  // const handleGoogleLogin = () => {
-  //   window.location.href = "http://localhost:5000/api/auth/google";
-  // };
   const handleGoogleLogin = () => {
-    // Start Google OAuth login by redirecting to the backend OAuth endpoint
     window.location.href =
       "https://designforyoubackend-1.onrender.com/api/auth/google";
   };
@@ -75,6 +75,7 @@ const LoginSystem = ({ toggleView }) => {
       navigate("/welcome"); // Redirect to the welcome page
     }
   }, [navigate]);
+
   // Function to update role on Google login
   const updateRoleOnLogin = async () => {
     try {
@@ -171,8 +172,9 @@ const LoginSystem = ({ toggleView }) => {
           fullWidth
           sx={{ mt: 2 }}
           type="submit"
+          disabled={loading} // Disable button during loading
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </Button>
       </form>
 
